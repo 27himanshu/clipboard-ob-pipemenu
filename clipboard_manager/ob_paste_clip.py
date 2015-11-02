@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # OpenBox pipe menu clipboard manager. Show parcellite clipboard, and inserts selected clip.
 #
 # Copyright 2013 Joe Bloggs (vapniks@yahoo.com)
@@ -36,7 +36,7 @@
 
 from ob_clipboard_manager import ob_cb_manager
 import pygtk
-import gtk 
+import gtk
 import os
 import subprocess
 import sys
@@ -45,6 +45,7 @@ import sys
 index = int(sys.argv[1])
 manager = ob_cb_manager()
 clip = manager.clippings[index]
-
 # paste the clipping 
-x = subprocess.Popen(['xvkbd','-xsendevent','-file','-'],stdin=subprocess.PIPE,stderr=open(os.devnull)).communicate(clip)
+#x = subprocess.Popen(['xvkbd','-xsendevent','-file','-'],stdin=subprocess.PIPE,stderr=open(os.devnull)).communicate(clip)
+p = subprocess.Popen(['xsel', '-b', '-i'], stdin=subprocess.PIPE, close_fds=True)
+p.communicate(input=clip.encode('utf-8'))
